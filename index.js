@@ -1,11 +1,9 @@
 // 引入 express 框架
 const express = require('express')
 // 引入 mysql 库
-const mysql = require("mysql");
+const mysql = require("mysql2");
 // 创建express实例
 const app = express();
-// 读取数据库连接文件
-const dbconfig = require("./config.js");
 const bodyParser = require('body-parser');
 
 // 格式化请求为json
@@ -14,7 +12,12 @@ app.use(json);
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // 新建一个连接池
-const db = mysql.createPool(dbconfig)
+const db = mysql.createPool({
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE
+})
 // 新增
 app.post('/api/transferHistory', (req, res) => {
   const { address, from, fromScan, to, toScan, token, amount, mode, status } = req.body;

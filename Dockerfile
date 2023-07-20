@@ -5,6 +5,7 @@ WORKDIR /app
 COPY package*.json ./
 COPY yarn.lock ./
 
+RUN yarn add mysql2
 RUN yarn install
 
 COPY . .
