@@ -1,0 +1,30 @@
+version: "2"
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: Qwe123456
+      MYSQL_DATABASE: send
+      MYSQL_USER: send
+      MYSQL_PASSWORD: Qwe123456
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./initdb:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+
+  nodejs:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: send
+      MYSQL_PASSWORD: Qwe123456
+      MYSQL_DATABASE: send
+
+volumes:
+  mysql-data:
