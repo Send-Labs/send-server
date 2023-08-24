@@ -18,6 +18,13 @@ const db = mysql.createPool({
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE
 })
+// const db = mysql.createPool({
+//     host: '147.182.251.92',
+//     port:'3307',
+//     user: 'send',
+//     password: 'Qwe123456',
+//     database: 'send'
+//   })
 // 新增
 app.post('/api/transferHistory', (req, res) => {
   const { address, from, fromScan, to, toScan, token, amount, mode, status } = req.body;
@@ -31,6 +38,41 @@ app.post('/api/transferHistory', (req, res) => {
         VALUES('${address}', '${from}','${fromScan}',
         '${to}', '${toScan}','${token}','${amount}','${mode}'
         ,'${status}')`, function (err, rows) {
+          if (err) {
+            console.log(err);
+            connection.destroy();
+            res.send({
+              code: 500,
+              msg: '系统错误'
+            })
+          } else {
+            connection.destroy();
+            res.send({
+              code: 200,
+              msg: "操作成功"
+            })
+          }
+        })
+
+      }
+    })
+
+
+  }
+  else {
+    res.send({ code: 102, msg: '参数不完整' })
+  }
+})
+// 更新
+app.put('/api/transferHistory', (req, res) => {
+  const { fromScan, toScan} = req.body;
+  if (fromScan && toScan) {
+    db.getConnection(function (err, connection) {
+      if (err) {
+        console.log("建立连接失败", err);
+      } else {
+        connection.query(`update transferHistory set  \`toScan\`='${toScan}'
+      where   \`fromScan\`='${fromScan}'`, function (err, rows) {
           if (err) {
             console.log(err);
             connection.destroy();
