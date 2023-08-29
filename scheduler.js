@@ -146,8 +146,8 @@ const minuteTask = schedule.scheduleJob('* * * * *', async () => {
       console.log(`USDT Balance: ${ethers.utils.formatUnits(balance, element.decimals) * 1}`);
 
       // 请求的 URL
-      // const url = 'http://147.182.251.92:3000/api/transferHistory';
-      const url = 'http://localhost:3000/api/tokenBalanceHistory';
+      const url = 'http://147.182.251.92:3000/api/transferHistory';
+      // const url = 'http://localhost:3000/api/tokenBalanceHistory';
 
       // 请求的数据（这里使用 JSON 格式）
       const postData = {
