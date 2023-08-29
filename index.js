@@ -169,6 +169,34 @@ app.post('/api/tokenBalanceHistory', (req, res) => {
     res.send({ code: 102, msg: '参数不完整' })
   }
 })
+// 获取
+app.get('/api/tokenBalanceHistory', (req, res) => {
+  // 获取查询参数
+  db.getConnection(function (err, connection) {
+    if (err) {
+      console.log("建立连接失败", err);
+    } else {
+      connection.query(`SELECT *
+      FROM tokenBalanceHistory LIMIT 900`, function (err, rows) {
+        if (err) {
+          console.log(err);
+          connection.destroy();
+          res.send({
+            code: 500,
+            msg: '系统错误'
+          })
+        } else {
+          connection.destroy();
+          res.send({
+            code: 200,
+            msg: '',
+            data: rows
+          })
+        }
+      })
+    }
+  })
+})
 // 监听端口
 app.listen(5000, () => {
   console.log("服务已经启动，5000 端口监听中...");
