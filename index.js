@@ -11,7 +11,7 @@ const json = express.json({ type: '*/json' });
 app.use(json);
 app.use(bodyParser.urlencoded({ extended: false }));
 // 导入定时任务模块
-// require('./scheduler');
+require('./scheduler');
 // 新建一个连接池
 const db = mysql.createPool({
   host: process.env.MYSQL_HOST,
