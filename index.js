@@ -11,21 +11,21 @@ const json = express.json({ type: '*/json' });
 app.use(json);
 app.use(bodyParser.urlencoded({ extended: false }));
 // 导入定时任务模块
-require('./scheduler');
+// require('./scheduler');
 // 新建一个连接池
-// const db = mysql.createPool({
-//   host: process.env.MYSQL_HOST,
-//   user: process.env.MYSQL_USER,
-//   password: process.env.MYSQL_PASSWORD,
-//   database: process.env.MYSQL_DATABASE
-// })
 const db = mysql.createPool({
-    host: '147.182.251.92',
-    port:'3307',
-    user: 'send',
-    password: 'Qwe123456',
-    database: 'send'
-  })
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE
+})
+// const db = mysql.createPool({
+//     host: '147.182.251.92',
+//     port:'3307',
+//     user: 'send',
+//     password: 'Qwe123456',
+//     database: 'send'
+//   })
 // 新增
 app.post('/api/transferHistory', (req, res) => {
   const { address, from, fromScan, to, toScan, token, amount, mode, status } = req.body;
