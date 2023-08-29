@@ -15,3 +15,15 @@ CREATE TABLE transferHistory (
   `cratetime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
+
+-- 转账记录
+CREATE TABLE tokenBalanceHistory (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tokenAddress` varchar(50) NOT NULL,
+  `contractAddress` varchar(50) NOT NULL,
+  `tokenName` varchar(20) NOT NULL,
+  `chainName` varchar(20) NOT NULL,
+  `balance` float(18) NOT NULL,
+  `cratetime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+);
