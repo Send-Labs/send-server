@@ -177,7 +177,7 @@ app.get('/api/tokenBalanceHistory', (req, res) => {
       console.log("建立连接失败", err);
     } else {
       connection.query(`SELECT *
-      FROM tokenBalanceHistory LIMIT 900`, function (err, rows) {
+      FROM tokenBalanceHistory ORDER BY id DESC LIMIT 900`, function (err, rows) {
         if (err) {
           console.log(err);
           connection.destroy();
