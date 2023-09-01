@@ -114,7 +114,7 @@ app.get('/api/transferHistory', (req, res) => {
         query = 'where ' + query
       }
       connection.query(`SELECT *
-      FROM transferHistory ${query}`, function (err, rows) {
+      FROM transferHistory ${query} order by cratetime  desc`, function (err, rows) {
         if (err) {
           console.log(err);
           connection.destroy();
