@@ -28,17 +28,19 @@ const db = mysql.createPool({
 //   })
 // 新增
 app.post('/api/transferHistory', (req, res) => {
-  const { address, from, fromScan, to, toScan, token, amount, mode, status } = req.body;
-  if (address && from && fromScan && to && toScan && token && amount && mode && status) {
+  const { addressFrom, addressTo, chainFrom, hashFrom, chainTo, hashTo,
+    tokenSymbol, tokenAmount, mode, status } = req.body;
+  if (addressFrom && addressTo && chainFrom && hashFrom && chainTo && hashTo &&
+    tokenSymbol && tokenAmount && mode && status) {
     db.getConnection(function (err, connection) {
       if (err) {
         console.log("建立连接失败", err);
       } else {
         connection.query(`INSERT INTO transferHistory
-        (\`address\`, \`from\`, \`fromScan\`,\`to\`,\`toScan\`,\`token\`,\`amount\`,\`mode\`,\`status\`)
-        VALUES('${address}', '${from}','${fromScan}',
-        '${to}', '${toScan}','${token}','${amount}','${mode}'
-        ,'${status}')`, function (err, rows) {
+        (\`addressFrom\`, \`addressTo\`, \`chainFrom\`,\`hashFrom\`,\`chainTo\`,\`hashTo\`,\`tokenSymbol\`,\`tokenAmount\`,\`mode\`,\`status\`)
+        VALUES('${addressFrom}', '${addressTo}','${chainFrom}',
+        '${hashFrom}', '${chainTo}','${hashTo}','${tokenSymbol}','${tokenAmount}'
+        ,'${mode}','${status}')`, function (err, rows) {
           if (err) {
             console.log(err);
             connection.destroy();
@@ -66,7 +68,7 @@ app.post('/api/transferHistory', (req, res) => {
 })
 // 更新
 app.put('/api/transferHistory', (req, res) => {
-  const { fromScan, toScan} = req.body;
+  const { fromScan, toScan } = req.body;
   if (fromScan && toScan) {
     db.getConnection(function (err, connection) {
       if (err) {
@@ -102,12 +104,12 @@ app.put('/api/transferHistory', (req, res) => {
 // 获取
 app.get('/api/transferHistory', (req, res) => {
   // 获取查询参数
-  const { address } = req.query
+  const { addressFrom } = req.query
   db.getConnection(function (err, connection) {
     if (err) {
       console.log("建立连接失败", err);
     } else {
-      let query = ` address='${address}'`;
+      let query = ` addressFrom='${addressFrom}'`;
       if (query) {
         query = 'where ' + query
       }
@@ -134,8 +136,8 @@ app.get('/api/transferHistory', (req, res) => {
 })
 // 新增
 app.post('/api/tokenBalanceHistory', (req, res) => {
-  const { tokenAddress,contractAddress,tokenName,chainName,balance } = req.body;
-  if (tokenAddress&&contractAddress&&tokenName&&chainName&&balance) {
+  const { tokenAddress, contractAddress, tokenName, chainName, balance } = req.body;
+  if (tokenAddress && contractAddress && tokenName && chainName && balance) {
     db.getConnection(function (err, connection) {
       if (err) {
         console.log("建立连接失败", err);
