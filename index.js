@@ -199,6 +199,39 @@ app.get('/api/tokenBalanceHistory', (req, res) => {
     }
   })
 })
+// 获取
+app.get('/api/whiteList', (req, res) => {
+  // 获取查询参数
+  const { walletAddress } = req.query
+  db.getConnection(function (err, connection) {
+    if (err) {
+      console.log("建立连接失败", err);
+    } else {
+      let query = ` walletAddress='${walletAddress}'`;
+      if (query) {
+        query = 'where ' + query
+      }
+      connection.query(`SELECT count(1)
+      FROM whiteList ${query}`, function (err, rows) {
+        if (err) {
+          console.log(err);
+          connection.destroy();
+          res.send({
+            code: 500,
+            msg: '系统错误'
+          })
+        } else {
+          connection.destroy();
+          res.send({
+            code: 200,
+            msg: '',
+            data: rows
+          })
+        }
+      })
+    }
+  })
+})
 // 监听端口
 app.listen(5000, () => {
   console.log("服务已经启动，5000 端口监听中...");

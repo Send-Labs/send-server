@@ -28,3 +28,11 @@ CREATE TABLE tokenBalanceHistory (
   `cratetime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
+
+--白名单 
+CREATE TABLE whiteList (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `walletAddress` varchar(50) NOT NULL,
+  `cratetime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+)
