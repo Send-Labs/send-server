@@ -211,7 +211,7 @@ app.get('/api/whiteList', (req, res) => {
       if (query) {
         query = 'where ' + query
       }
-      connection.query(`SELECT count(1)
+      connection.query(`SELECT id
       FROM whiteList ${query}`, function (err, rows) {
         if (err) {
           console.log(err);
